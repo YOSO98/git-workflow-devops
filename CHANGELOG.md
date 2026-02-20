@@ -12,3 +12,10 @@
 - Conventional Commits
 - Branches protégées
 - Merge --no-ff
+
+## [v1.1.0] - 2026-02-20
+
+### ✅ Ajouts
+- Pipeline CI/CD GitHub Actions
+- README complet avec badges
+- Documentation Git Flow et Conventional Commits
