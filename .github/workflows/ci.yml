@@ -1,0 +1,38 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [develop, feature/*]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validation:
+    name: Validation du code
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Vérifier les fichiers sensibles
+        run: |
+          echo "🔍 Recherche de fichiers .env..."
+          if find . -name "*.env" | grep -q "."; then
+            echo "❌ Fichier .env détecté !"
+            exit 1
+          fi
+          echo "✅ Aucun fichier sensible trouvé"
+
+      - name: Vérifier les scripts Bash
+        run: |
+          echo "🔍 Vérification des scripts Bash..."
+          if find . -name "*.sh" | grep -q "."; then
+            bash -n scripts/monitoring.sh
+            echo "✅ Scripts Bash valides"
+          fi
+
+      - name: Afficher la structure du projet
+        run: |
+          echo "📁 Structure du projet :"
+          find . -not -path './.git/*' -type f
